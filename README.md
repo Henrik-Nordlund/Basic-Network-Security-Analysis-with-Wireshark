@@ -28,7 +28,7 @@ Shared secret, which can be found in the client.
 
 <b>Objective 3 – Analyze a HTTP Basic Authentication</b><br>
 HTTP is a clear text protocol.  A display filter was used, and not a capture filter. Specifically port 80 to capture only HTTP traffic.
-A HTTP website was accessed, where I was prompted to type my credentials.
+A HTTP website was accessed, where the credentials was prompted for.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Http%20login.PNG"/>
 As can be seen this is not secure since Wireshark can see exactly was transmitted.
 
