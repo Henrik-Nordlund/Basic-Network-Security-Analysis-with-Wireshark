@@ -2,20 +2,20 @@
 I am a security analyst working for a company that wants to detect certain network packets on the server, from several protocols. The company wants to test the access to an internal database which is using the RADIUS protocol at the moment, and examine just how safe are websites that uses HTTP with Basic Auth or form-based verification. Finally, as a system administrator: is there a way to see encrypted traffic on our own network (HTTPS)? I am tasked to looking into these things.
 
 <b>Objective 1 – capture network traffic and view captured traffic through a display filter</b><br>
-Captured traffic had been stored in a pcap file generated in the tool Wireshark. I viewed it. The network protocol of interest was RADIUS. Remote Authentication Dial-In User Services is used for authentication of users logging in to a central database. I played around a bit by submitting bogus passwords to access the central database just to see what the response will be. RADIUS is not secure at all as can viewed in the attached file below. 
-See also: RADIUS.png
-In addition simple capture of ongoing network was used, using the ethernet Applying DNS as a display filter which displayed the DNS traffic. I used ethernet as the interface of interest.
+Captured traffic had been stored in a pcap file generated in the tool Wireshark. The network protocol of interest was RADIUS. RADIUS, or Remote Authentication Dial-In User Services, is used for authentication of users logging in to a central database. By submitting bogus passwords to access the central database it became obvious that RADIUS is not secure at all - as can be viewed in image below. 
+<img src ="https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/275fba478ef96a815d72139b7e17ee9d5949a8a0/RADIUS.PNG"/>
+In addition simple capture of ongoing network was used, using the ethernet Applying DNS as a display filter which displayed the DNS traffic. Ethernet was the interface of interest.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Capturing%20from%20ethernet%203.PNG"/>
 By utilizing the display filter, the DNS traffic could be filtered out. As shown below, DNS traffic is not encrypted.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Early%20DNS%20traffic.PNG"/>
 
 <b>Objective 2 – Generate and capture RADIUS traffic</b><br>
-I utilized a public RADIUS server and submitted a username and a password. The RADIUS will then store those two things. 
+A public RADIUS server was utilized and a username and a password was submitted. The RADIUS will then store those two things. 
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Public%20Radius%20server.PNG"/>
-In wireshark, to ultiize the capture filter even if one knows the interesting protocol one cannot simply type “RADIUS” there because it is not a display filter. But RADIUS uses the 1812 port, so we can use that to capture the traffic of interest to us. I used a client to the RADIUS server, to send information to it. That traffic will be captured by wireshark.
+In wireshark, to ultiize the capture filter even if one knows the interesting protocol one cannot simply type “RADIUS” there because it is not a display filter. But RADIUS uses the 1812 port, so that can be usedto capture the traffic of interest to us. A client to the RADIUS server was useful to send information to it. That traffic will be captured by wireshark.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/NTRadPing%20access%20accept.PNG"/>
 
-I sent the correct username, but different passwords to the RADIUS server using the client. In the attached file below you can see different captured responses from the RADIUS server.
+The correct username, but different passwords to the RADIUS server was sent using the client. In the attached image below different captured responses can be seen from the RADIUS server.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Capturing%20from%20port%201812%20-%20different%20responses.PNG"/>
 As can be seen, RADIUS is not encrypted at all.
 <imr src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Capturing%20from%20port%201812%20-%20username%20clearly%20visible.PNG"/>
