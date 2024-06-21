@@ -3,7 +3,9 @@ I am a security analyst working for a company that wants to detect certain netwo
 
 <b>Objective 1 – capture network traffic and view captured traffic through a display filter</b><br>
 Captured traffic had been stored in a pcap file generated in the tool Wireshark. The network protocol of interest was RADIUS. RADIUS, or Remote Authentication Dial-In User Services, is used for authentication of users logging in to a central database. By submitting bogus passwords to access the central database it became obvious that RADIUS is not secure at all - as can be viewed in image below. 
+
 <img src ="https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/275fba478ef96a815d72139b7e17ee9d5949a8a0/RADIUS.PNG"/>
+
 In addition simple capture of ongoing network was used, using the ethernet Applying DNS as a display filter which displayed the DNS traffic. Ethernet was the interface of interest.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Capturing%20from%20ethernet%203.PNG"/>
 By utilizing the display filter, the DNS traffic could be filtered out. As shown below, DNS traffic is not encrypted.
@@ -29,7 +31,9 @@ Shared secret, which can be found in the client.
 <b>Objective 3 – Analyze a HTTP Basic Authentication</b><br>
 HTTP is a clear text protocol.  A display filter was used, and not a capture filter. Specifically port 80 to capture only HTTP traffic.
 A HTTP website was accessed, where the credentials was prompted for.
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Http%20login.PNG"/>
+
 As can be seen this is not secure since Wireshark can see exactly was transmitted.
 
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Http%20login%20in%20Wireshark.PNG"/>
@@ -38,16 +42,19 @@ Upon a closer look, the credentials can be directly seen in Wireshark.
 
 <b>Objective 4 – Http Form-Based Authentication and DNS</b></br>
 Form based HTTP authentication was created to negate the downsides of basic authentication. It does not send a GET request with the credentials, instead it sends a POST request and passes the credentials with it. Unlike basic authentication, Wireshark will find the credentials in the HTML field.
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Display%20captured%20packets%20with%20HTTP%20traffic.PNG"/>
+
 Normally, this would be within TLS, so it does not matter if it is not encrypted. But now the credentials are shown in the form field instead.
 DNS traffic, utilizing port 53, are not encrypted either as the picture below demonstrates.
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Capturing%20DNS%20traffic%20with%20port%2053.PNG"/>
 
 <b>Objective 5 – Initiate, Capture and Analyze Telnet Sessions</b><br>
 Telnet is unencrypted, it’s secure form is SSH. Telnet is a computer protocol built to interacting with remote devices, to access and manage a device.
 Telnet uses port 23, and Wireshark was set to capture packets from that port.
 PowerShell was used to generate telnet traffic with the following command: telnet tty.sdf.org
-InsideWireshark, rightclick on the first telnet package, choose Follow -> TCP Stream.
+Inside Wireshark, rightclick on the first telnet package, choose Follow -> TCP Stream.
 
 <img src ="https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Wireshark%20follow%20TCP%20stream.PNG"/>
 It clearly shows that telnet is not secure at all.
@@ -57,8 +64,10 @@ Both telnet and SSH are both used to remotely access a device, but SSH is encryp
 The differences between captured traffic using SSH relative to telnet was demonstrated by using host tty.sdf.org as a capture filter. PowerShell could then be used to directly access the site: telnet tty.sdf.org and ssh tty.sdf.org respectively.
 Back in Wireshark, there is several conversations going on since the same website was accessed with both telnet and SSH. 
 Statistics -> Conversations
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Conversations%20capturing%20both%20telnnet%20and%20ssl.PNG"/>
 Clicking in Follow Stream.. shows what any man in middle would see in respective case.
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Telnet%20traffic%20is%20not%20encrypted.PNG"/>
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/SSH%20traffic%20is%20encrypted.PNG"/>
 
@@ -75,7 +84,9 @@ To view the conversion: Statistics -> Conversations
 Clicking in Follow Stream.. shows what any man in middle would see in respective case.
 And as be can seen below, it is now decrypted.
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Unencypted%20HTTPS%20stream.PNG"/>
+
 Even if you go back to where we see the packets it is more clear.
+
 <img src = "https://github.com/Henrik-Nordlund/Basic-Network-Security-Analysis-with-Wireshark/blob/f8e69bf6da86951a7c73d0cc8754bc40cdafb76e/Clearer%20Packets.PNG"/>
 
 
